@@ -1,3 +1,3 @@
-# Run backend and client server
+# Run Server
 
-- npm run server
+- first run npm install then npm run server
