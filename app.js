@@ -28,6 +28,10 @@ mongoose
   )
   .catch(err => console.log(err));
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 app.get("/", (req, res) => {
   User.find({}).then(user => res.json({ user }));
 });
