@@ -26,10 +26,19 @@ router.post("/signup", async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    res.status(400).json({ msg: "Email already exist" });
+    res.status(400).json({ msg: "Email already exists" });
   } else {
+    // Check password length
+    if (password.length < 4)
+      return res
+        .status(400)
+        .json({ msg: "Password must be at least 4 characters" });
+
+    // create salt and hash the password
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(password, salt);
+
+    // create new user
     await User.create({ name, email, password: hash })
       .then(user => {
         const token = createToken(user._id);
@@ -64,7 +73,7 @@ router.post("/login", async (req, res) => {
         token,
       });
     } else {
-      res.status(401).json({ msg: "Incorrect password" });
+      res.status(401).json({ msg: "Incorrect Password" });
     }
   } else {
     res.status(401).json({ msg: "Email doesn't exist" });

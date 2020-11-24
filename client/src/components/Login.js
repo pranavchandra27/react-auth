@@ -3,9 +3,9 @@ import { useData } from "../StateProvider";
 import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("john@email");
   const [password, setPassword] = useState("");
-
+  const [err, setErr] = useState("");
   const {
     state: { loading },
     dispatch,
@@ -40,7 +40,7 @@ const Login = () => {
       })
       .catch(err => {
         setLoader(false);
-        alert(err.message);
+        setErr(err.response.data.msg);
       });
 
     clearFields();
@@ -50,6 +50,7 @@ const Login = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
+        {err && <p className='errors'>{err}</p>}
         <input
           type='email'
           placeholder='Email'
@@ -57,6 +58,7 @@ const Login = () => {
           onChange={e => setEmail(e.target.value)}
           required
         />
+
         <input
           type='password'
           placeholder='Password'

@@ -43,7 +43,7 @@ nav ul li .logout-btn:hover {
 }
 
 form {
-  width: 300px;
+  width: 350px;
   margin: 0 auto;
   padding-top: 20px;
 }
@@ -79,4 +79,14 @@ form button:hover {
 
 .Dash h3 span {
   color: #222222;
+}
+
+.errors {
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+  color: red;
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 4px;
 }

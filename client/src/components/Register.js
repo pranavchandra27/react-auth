@@ -6,6 +6,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
 
   const {
     state: { loading },
@@ -42,15 +43,16 @@ const Register = () => {
       })
       .catch(err => {
         setLoader(false);
-        alert(err.message);
+        setErr(err.response.data.msg);
       });
-    clearFields();
+    //clearFields();
   };
 
   return (
     <div>
       <h1>Sign up</h1>
       <form onSubmit={handleSubmit}>
+        {err && <p className='errors'>{err}</p>}
         <input
           type='text'
           placeholder='Name'
