@@ -11,6 +11,7 @@ const Register = () => {
   const {
     state: { loading },
     dispatch,
+    setCookie,
   } = useData();
 
   const setLoader = status => {
@@ -20,13 +21,6 @@ const Register = () => {
     });
   };
 
-  // Empty all the fields
-  const clearFields = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-  };
-
   // Signup user
   const handleSubmit = e => {
     e.preventDefault();
@@ -34,18 +28,18 @@ const Register = () => {
 
     axios
       .post("/api/user/signup", { name, email, password })
-      .then(res => {
+      .then(({ data }) => {
         dispatch({
           type: "SET_USER",
-          payload: res.data,
+          payload: data,
         });
+        setCookie(data.token);
         setLoader(false);
       })
       .catch(err => {
         setLoader(false);
         setErr(err.response.data.msg);
       });
-    //clearFields();
   };
 
   return (

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
 module.exports = (req, res, next) => {
-  const token = req.header("auth-token");
+  const token = req.header("x-auth-token");
 
   // check the token
   if (!token) {

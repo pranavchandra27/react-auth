@@ -6,6 +6,7 @@ const Navbar = () => {
   const {
     state: { user },
     dispatch,
+    setCookie,
   } = useData();
 
   const logout = () => {
@@ -13,6 +14,7 @@ const Navbar = () => {
       type: "SET_USER",
       payload: null,
     });
+    setCookie("");
   };
 
   return (

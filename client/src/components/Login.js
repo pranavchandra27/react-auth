@@ -3,12 +3,13 @@ import { useData } from "../StateProvider";
 import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState("john@email");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
   const {
     state: { loading },
     dispatch,
+    setCookie,
   } = useData();
 
   const setLoader = status => {
@@ -18,12 +19,6 @@ const Login = () => {
     });
   };
 
-  // Empty all the fields
-  const clearFields = () => {
-    setEmail("");
-    setPassword("");
-  };
-
   // Submit form and login user
   const handleSubmit = e => {
     e.preventDefault();
@@ -31,19 +26,18 @@ const Login = () => {
 
     axios
       .post("/api/user/login", { email, password })
-      .then(res => {
+      .then(({ data }) => {
         dispatch({
           type: "SET_USER",
-          payload: res.data,
+          payload: data,
         });
+        setCookie(data.token);
         setLoader(false);
       })
       .catch(err => {
         setLoader(false);
         setErr(err.response.data.msg);
       });
-
-    clearFields();
   };
 
   return (
